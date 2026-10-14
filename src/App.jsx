@@ -82,7 +82,7 @@ class ProductErrorBoundary extends Component {
   }
 }
 
-function ProductList({ onSelect }) {
+function ProductList({ onSelect, registeredUser }) {
   const products = use(productsPromise)
 
   return (
@@ -94,7 +94,9 @@ function ProductList({ onSelect }) {
             <span className="category">{product.category}</span>
             <h3>{product.name}</h3>
             <p className="price">₹{product.price.toLocaleString('en-IN')}</p>
-            <button onClick={() => onSelect(product)}>View details</button>
+            <button onClick={() => onSelect(product)} disabled={!registeredUser}>
+              {registeredUser ? "View details" : "Register to view details"}
+            </button>
           </div>
         </article>
       ))}
@@ -285,11 +287,21 @@ function ProductDetails({ product, cartCount, setCartItems }) {
         <p className="cart-count">
           Cart items: <strong>{optimisticCart}</strong>
         </p>
-        <CartButton
-          ref={buttonRef}
-          onAdd={addToCart}
-          pending={pending}
-        />
+        <div className="cart-actions">
+          <CartButton
+            ref={buttonRef}
+            onAdd={addToCart}
+            pending={pending}
+          />
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={() => buttonRef.current?.focus()}
+            disabled={pending}
+          >
+            Focus add-to-cart button
+          </button>
+        </div>
         <label className="failure-toggle">
           <input
             type="checkbox"
@@ -378,8 +390,11 @@ function App() {
             </div>
 
             <ProductErrorBoundary>
+              {!registeredUser && (
+                <p className="notice">Create an account below before viewing product details or adding items to your cart.</p>
+              )}
               <Suspense fallback={<p className="notice">Loading products…</p>}>
-                <ProductList onSelect={setSelectedProduct} />
+                <ProductList onSelect={setSelectedProduct} registeredUser={registeredUser} />
               </Suspense>
             </ProductErrorBoundary>
           </section>
