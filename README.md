@@ -67,7 +67,7 @@ npm run lint
 npm run build
 ```
 
-Run these commands locally before submitting. This repository update has not been verified by executing the app in a local runtime.
+Verification completed locally: `npm run lint` passed with no errors, and `npm run build` completed successfully with Vite.
 
 ## Screenshot Evidence Checklist
 
@@ -93,4 +93,5 @@ Capture screenshots from the running app and attach them to the assignment/PR:
 
 - Repository: https://github.com/rsl-nehaAgarwal/react19-ecommerce
 - Assignment branch: https://github.com/rsl-nehaAgarwal/react19-ecommerce/tree/feature/complete-react19-assignment
-- Pull request: add the PR URL after it is created.
+- Pull request: https://github.com/rsl-nehaAgarwal/react19-ecommerce/pull/1
+- Screenshot evidence: screenshots demonstrating the app and React 19 behaviors are attached to the pull request.
